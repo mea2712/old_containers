@@ -1,0 +1,13 @@
+#!bin/env bash
+
+<<'//_SUMMARY_//'
+Download Bioconductor image to create container for analysis
+Install Seurat
+//_SUMMARY_//
+
+
+<<'//_TASKS_//'
+2024-06-011
+Some time ago I created a image. Now I will add more functionalities to it and save it to an updated version
+Done - Uploaded to Bianca
+//_TASKS_//

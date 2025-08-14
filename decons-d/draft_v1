@@ -1,0 +1,89 @@
+# Image used to host bulk deconvolution algorithms
+
+FROM rocker/r2u:22.04
+
+# Needed to properly handle UTF-8
+ENV PYTHONIOENCODING=UTF-8
+
+# Install required packages
+RUN apt-get update && apt-get install -y \
+        curl \
+	      git \
+        pandoc \
+        pandoc-citeproc \
+        r-cran-data.table \
+        r-cran-devtools \
+        r-cran-doparallel \
+        r-cran-foreach \
+        r-cran-git2r \
+        r-cran-igraph \
+        r-cran-png \
+	      r-cran-profmem \
+        r-cran-rcpparmadillo \
+        r-cran-rsqlite \
+	      r-cran-stringdist \
+        r-cran-testthat \
+        r-cran-tidyverse \
+        r-cran-tinytest \
+        r-cran-ttdo \
+        r-cran-unix \
+        r-cran-xts \
+        r-cran-snowfall \
+        r-cran-snow \
+        r-cran-NMF \
+        r-cran-registry \
+        r-cran-rngtools \
+        r-cran-cluster \
+        r-cran-ggrastr \
+        r-cran-viridis \
+        r-cran-ggpointdensity \
+        r-cran-egg \
+        r-cran-matrixStats \
+        r-cran-ggplot2 \
+        r-cran-RColorBrewer \
+        r-cran-ggrepel \
+        r-cran-ggpubr \
+        r-cran-Seurat \
+        r-cran-SeuratObject \
+        r-cran-SeuratDisk \
+        r-cran-sctransform \
+        r-cran-R.utils \
+        r-cran-doMC \
+        r-cran-FARDEEP \
+        r-cran-gridExtra \
+        r-cran-gtools \
+        r-cran-nnls \
+        r-cran-pheatmap \
+        r-cran-littler \ 
+	      sqlite3 \
+        sudo
+
+# Install plr -- for now (?) from GH; also install visualTest
+RUN installGithub.r stat447/plr MangoTheCat/visualTest
+
+RUN useradd ag \
+	&& mkdir /home/ag \
+	&& chown ag:ag /home/ag \
+	&& echo "[user]" > /home/ag/.gitconfig \
+	&& echo "	name = Autograding User" >> /home/ag/.gitconfig \
+	&& echo "	email = ag@nowhere" >> /home/ag/.gitconfig \
+	&& chown ag:ag /home/ag/.gitconfig
+
+CRAN
+
+suppressMessages(library(Matrix)
+suppressMessages(library(limma))
+suppressMessages(library(monocle3))
+(AnnotationDbi)
+(Biobase)
+library(edgeR)
+library(limma)
+library(MASS)
+library(org.Hs.eg.db)
+library(org.Mm.eg.db)
+library(parallel)
+library(pheatmap)
+library(scater)
+library(scran)
+library(SingleCellExperiment)
+library(BiocParallel)

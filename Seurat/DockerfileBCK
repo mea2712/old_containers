@@ -1,0 +1,44 @@
+FROM satijalab/seurat:4.1.0
+
+#RUN R -e 'install.packages("remotes")'
+RUN R -e 'install.packages("BiocManager")'
+RUN R -e 'BiocManager::install(version="3.14")'
+
+RUN R -e 'install.packages("data.table")'
+RUN R -e 'install.packages("ggplot2")'
+RUN R -e 'install.packages("gridGraphics")'
+RUN R -e 'install.packages("cowplot")'
+RUN R -e 'install.packages("igraph")' #-- marsked by tidyr, tibble
+RUN R -e 'install.packages("dyplr")'
+RUN R -e 'install.packages("stringr")'
+RUN R -e 'install.packages("tidyr")'
+RUN R -e 'install.packages("tibble")'
+RUN R -e 'install.packages("xml2")'
+RUN R -e 'install.packages("rvest")' #--
+RUN R -e 'install.packages("reader")' #--
+
+RUN R -e 'install.packages("harmony")' #--
+RUN R -e 'install.packages("mclust")' #--
+RUN R -e 'install.packages("RColorBrewer")'
+RUN R -e 'install.packages("scales")'
+
+#RUN R -e 'install.packages("SeuratDisk")'
+
+#RUN R -e 'BiocManager::install("GenomicRanges")'
+RUN R -e 'BiocManager::install("Rhtslib")''
+RUN R -e 'BiocManager::install("Rsamtools")' # not installed
+RUN R -e 'BiocManager::install("rtracklayer")' #--
+#RUN R -e 'BiocManager::install("SingleCellExperiment")'
+#RUN R -e 'BiocManager::install("scuttle")'
+#RUN R -e 'BiocManager::install("scran")'
+#RUN R -e 'BiocManager::install("scater")'
+#RUN R -e 'BiocManager::install("batchelor")'
+#RUN R -e 'BiocManager::install("AnnotationHub")'
+#RUN R -e 'BiocManager::install("celldex")'
+#RUN R -e 'BiocManager::install("SingleR")'
+RUN R -e 'BiocManager::install("scRNAseq")' # not installed
+
+RUN R -e 'BiocManager::install("infercnv")' # not installed
+RUN R -e 'BiocManager::install("ComplexHeatmap")'
+RUN R -e 'BiocManager::install("karyoploteR")'
+RUN R -e 'BiocManager::install("regioneR")'

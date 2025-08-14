@@ -1,0 +1,54 @@
+2023-05-05
+pull image from DockerHub
+
+2023-05-22
+Build new image that includes rtracklayer to read GTF files
+For some reason even though I pull infercnv version 1.16.0 from DockerHub, it gets tagged as "latest", whixh is also not worng, since it is the latest release. However, I don't know why it doesn't keep the tag with the version. Oh! maybe because I modified it? I mean it is my *latest* version of a modify infercnv image. Yes! that is: th eprobelm is *I* did not add a version to *my* image
+I fixed it now
+--> The image doesn't work. I opened an issue in their wiki page:
+"
+I'm trying to build an image in a mac M1. When I upload it to a CentOS server it fails.
+
+My docker file looks like:
+
+`
+FROM trinityctat/infercnv:1.16.0-multiarch
+
+RUN R -e 'install.packages("remotes")'
+RUN R -e 'install.packages("BiocManager")'
+
+RUN R -e 'BiocManager::install("rtracklayer")'
+`
+
+I execute it as:
+docker image build -f $PWD/Dockerfile -t trinityctat_infercnv:1.16.0 --platform amd64 .
+docker save edb595b6ea31 -o trinityctat-infercnv.1.16.0.tar
+
+Upload to server and:
+singularity build trinityctat-infercnv.1.16.0.sif docker-archive://infercnv.1.16.0.tar
+
+It builds ok, but when trying to test it:
+singularity shell trinityctat-infercnv.1.16.0.sif
+
+I get the error:
+FATAL: could not open image trinityctat.1.16.0.sif: the image's architecture (arm64) could not run on the host 's (amd64)
+
+This has not happened when building other images. I also tried FROM trinityctat/infercnv:1.16.0 in the dockerfile but it didn't help
+Do you have any tips or ideas as to how to proceed?
+Thanks!
+"
+--> Their answer in https://github.com/broadinstitute/infercnv/issues/544
+"
+I have been actively updating the Docker images today specifically because the multi architecture build does not seem to be working properly in all cases. I finished rebuilding the image trinityctat/infercnv:1.16.0-multiarch your are using as source on a different machine around the same time you posted and this one seems to be working better (at least for amd64) because the Terra workflow that uses it can finally find and run it.
+
+To test the new version of the image, try pulling/building your Docker image again with the --pull --no-cache arguments to make sure the latest version is used rather than an older cached one.
+
+The amd64 version of the image should have the sha256: 56d3725d30a68f93a78b56b8c8b183bcd8d9aecea8d8fcdcd239337b30b49b4c.
+
+Regards,
+Christophe.
+"
+# 2023-05-26
+I will try to build the image again.
+
+
